@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp Message Sender</title>
+<style>
+    .main {
+        text-align: center;
+        margin-top: 50px;
+    }
+    .container {
+        display: inline-block;
+        text-align: left;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input[type="number"], textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+    .btn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+    <main class="main">
+        <div class="container">
+            <h1>Enter Details Below</h1>
+            <input type="text" id="mobileNumber" placeholder="Enter WhatsApp number">
+            <br>
+            <input type="number" id="messageCount" placeholder="Enter Quantity">
+            <br>
+            <textarea id="messageText" placeholder="Enter message here" rows="4"></textarea>
+            <br>
+            <button class="btn" onclick="sendMessage()">Submit</button>
+        </div>
+    </main>
+
+    <script>
+        function sendMessage() {
+            // Get input values
+            var mobileNumber = document.getElementById('mobileNumber').value.trim();
+            var messageCount = parseInt(document.getElementById('messageCount').value.trim(), 10);
+            var messageText = document.getElementById('messageText').value.trim();
+
+            // Validate inputs
+            if (!mobileNumber || !messageCount || !messageText) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            // Construct the WhatsApp URL
+            var baseURL = 'https://wa.me/' + mobileNumber;
+            var encodedMessage = encodeURIComponent(messageText);
+            var finalURL = baseURL + '?text=' + encodedMessage;
+
+            // Open WhatsApp Web and send messages
+            for (var i = 0; i < messageCount; i++) {
+                window.open(finalURL, '_blank');
+            }
+
+            // Confirmation message
+            alert('Messages sent successfully!');
+        }
+    </script>
+</body>
+</html>
